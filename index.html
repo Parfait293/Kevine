@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votez pour moi - Miss Golfe Togo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff69b4;
+            --secondary: #ffd700;
+            --dark: #2c003e;
+            --light: #fffaf0;
+            --accent: #ff1493;
+            --success: #28a745;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 5vw, 1.8rem);
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0.5rem 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(44, 0, 62, 0.7), rgba(44, 0, 62, 0.7)), url('https://source.unsplash.com/random/1920x1080/?beauty,pageant,miss');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: clamp(6rem, 15vw, 8rem) 1rem 4rem;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #ffc300;
+        }
+
+        section {
+            padding: clamp(3rem, 10vw, 5rem) 1rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-family: 'Playfair Display', serif;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about-text h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+        }
+
+        .about-text p {
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            height: clamp(350px, 50vw, 450px);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 10px;
+            border: 3px solid var(--primary);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            border-radius: 17px;
+            z-index: -1;
+            animation: borderAnimation 3s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes borderAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .image-placeholder {
+            color: #999;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .vote-section {
+            background: linear-gradient(135deg, var(--light), #f0e6f6);
+        }
+
+        .vote-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+        }
+
+        .vote-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+            max-width: 350px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .vote-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .vote-card h3 {
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+        }
+
+        .vote-card p {
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+        }
+
+        .price {
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            color: var(--accent);
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .donation-form {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: clamp(0.9rem, 3.5vw, 1rem);
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .countdown-item {
+            text-align: center;
+            min-width: 70px;
+            background: white;
+            padding: 0.8rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-number {
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .countdown-label {
+            color: var(--dark);
+            font-weight: 500;
+            margin-top: 0.5rem;
+            font-size: clamp(0.8rem, 3vw, 0.9rem);
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 20px;
+            border-radius: 10px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 100%;
+            border-radius: 10px;
+            width: 0;
+            transition: width 1s ease-in-out;
+        }
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 0.8rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .hero {
+                margin-top: 100px;
+                padding: 5rem 1rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: clamp(1.5rem, 5vw, 2rem);
+            }
+
+            .hero p {
+                font-size: clamp(0.9rem, 3.5vw, 1rem);
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                padding: 0.7rem 1.5rem;
+                font-size: clamp(0.8rem, 3vw, 0.9rem);
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .about-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .about-image {
+                height: 350px;
+            }
+
+            .vote-options {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .vote-card {
+                max-width: 90%;
+            }
+
+            .donation-form {
+                padding: 1.5rem;
+            }
+
+            .countdown-item {
+                min-width: 60px;
+                padding: 0.5rem;
+            }
+
+            .countdown-number {
+                font-size: clamp(1.5rem, 4vw, 1.8rem);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: clamp(1.2rem, 4vw, 1.5rem);
+            }
+
+            .hero {
+                padding: 4rem 0.5rem 2rem;
+            }
+
+            .section-title h2 {
+                font-size: clamp(1.5rem, 4vw, 1.8rem);
+            }
+
+            .about-text h3 {
+                font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+            }
+
+            .about-image {
+                height: 300px;
+                padding: 8px;
+            }
+
+            .vote-card {
+                padding: 1.5rem;
+            }
+
+            .form-group input,
+            .form-group textarea {
+                padding: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">Miss <span>Golfe 1 2026</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#about">À propos</a></li>
+                    <li><a href="#vote">Voter</a></li>
+                    <li><a href="#donate">Soutenir</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Soutenez ma candidature à Miss Golfe 1 2026</h1>
+            <p>Rejoignez-moi dans cette aventure magique ! En tant que représentante fière de notre région, j'ai besoin de votre soutien pour briller lors de ce concours prestigieux en décembre. Chaque vote et chaque don comptent pour réaliser ce rêve ensemble !</p>
+            <div class="hero-buttons">
+                <a href="https://payzyapp.com/vote/adjalleayawakevine355" class="btn">Voter maintenant</a>
+                <a href="https://payzyapp.com/vote/adjalleayawakevine355" class="btn btn-secondary">Faire un don</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Pourquoi me soutenir ?</h2>
+                <p>Découvrez mon parcours inspirant et les valeurs que je porte pour notre communauté. Ensemble, faisons rayonner la beauté et la culture du Golfe Togo !</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Une candidate passionnée et engagée</h3>
+                    <p>Je m'appelle [Votre prénom], originaire de la magnifique région du Golfe 1 2026. Ce concours représente pour moi l'occasion unique de célébrer notre héritage culturel riche et de promouvoir l'empowerment des femmes dans notre société.</p>
+                    <p>Votre soutien est essentiel : chaque vote me rapproche de la couronne, et chaque contribution financière couvre les frais essentiels comme les tenues somptueuses, les voyages et les formations professionnelles.</p>
+                    <p>Rejoignez cette aventure et aidons notre région à briller sur la scène nationale !</p>
+                </div>
+                <div class="about-image">
+                    <img src="keny2.jpeg" alt="Photo de la candidate" onerror="this.style.display='none'; document.getElementById('image-placeholder').style.display='block';">
+                    <div id="image-placeholder" class="image-placeholder" style="display: none;">
+                        Image de la candidate<br>
+                        (keny2.jpeg non trouvée)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="vote" class="vote-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Comment voter pour moi ?</h2>
+                <p>Participez au vote officiel et faites la différence ! Votre voix compte pour le classement final.</p>
+            </div>
+            
+            <div class="section-title">
+                <h3>Il reste avant la fin des votes :</h3>
+            </div>
+            
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Jours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Heures</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Secondes</div>
+                </div>
+            </div>
+            
+            <div class="vote-options">
+                <div class="vote-card">
+                    <h3>Vote Standard</h3>
+                    <p>Votez via le système officiel du concours pour booster mon classement.</p>
+                    <div class="price">200 F</div>
+                    <p>Chaque vote à 200 FCFA est un pas vers la victoire – simple, sécurisé et impactant !</p>
+                    <a href="https://payzyapp.com/vote/adjalleayawakevine355" class="btn">Voter maintenant</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="donate">
+        <div class="container">
+            <div class="section-title">
+                <h2>Soutenez financièrement ma campagne</h2>
+                <p>Imaginez : votre don transformera ma participation en une campagne inoubliable ! Il couvrira les coûts des tenues éblouissantes, des déplacements et des formations, tout en nous permettant de promouvoir les valeurs de notre région. Ne ratez pas cette chance de faire partie de l'histoire – chaque contribution, petite ou grande, nous rapproche de la couronne. Soutenez-moi aujourd'hui et ensemble, créons un impact durable pour le Golfe 1 2026 !</p>
+            </div>
+            
+            <div class="donation-form">
+                <h3>Faire un don</h3>
+                <p>Cliquez sur le bouton ci-dessous pour effectuer un don via notre plateforme sécurisée</p>
+                <a href="https://payzyapp.com/vote/adjalleayawakevine355" target="_blank" class="btn">Faire un don maintenant</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Restons en contact</h2>
+                <p>Suivez mes aventures et mises à jour exclusives sur les réseaux sociaux. Votre engagement fait la différence !</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Merci infiniment pour votre soutien précieux ! Ensemble, nous conquerrons le titre de Miss Golfe 1 2026.</p>
+            <div class="social-links">
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">WhatsApp</a>
+            </div>
+            <p>© 2026 Campagne Miss Golfe1 2026 - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        // Date cible pour le compte à rebours (15 décembre 2025)
+        const countdownDate = new Date('Dec 15, 2025 23:59:59').getTime();
+        
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").textContent = days.toString().padStart(2, '0');
+            document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("days").textContent = "00";
+                document.getElementById("hours").textContent = "00";
+                document.getElementById("minutes").textContent = "00";
+                document.getElementById("seconds").textContent = "00";
+            }
+        }
+        
+        updateCountdown();
+        const countdownInterval = setInterval(updateCountdown, 1000);
+
+        function voteForMe(type) {
+            let voteAmount = 200;
+            if (confirm(`Vous allez effectuer un vote pour un montant de ${voteAmount} FCFA. Confirmer?`)) {
+                alert(`Merci pour votre vote ! Votre soutien illumine ma campagne.`);
+            }
+        }
+    </script>
+</body>
+</html>
