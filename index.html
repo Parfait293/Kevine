@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Votez pour moi - Miss Golfe Togo</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #ff69b4;
@@ -26,6 +27,7 @@
             background-color: var(--light);
             color: #333;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         header {
@@ -88,6 +90,95 @@
             transform: scale(1.05);
         }
 
+        /* Menu mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            z-index: 999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            text-align: center;
+        }
+
+        .mobile-nav ul li {
+            margin: 1.5rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav.active ul li {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .mobile-nav ul li:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-nav ul li:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-nav ul li:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-nav ul li:nth-child(4) { transition-delay: 0.4s; }
+
+        .mobile-nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: block;
+            padding: 0.5rem 1rem;
+        }
+
+        .mobile-nav ul li a:hover {
+            color: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1002;
+            padding: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .close-menu:hover {
+            transform: scale(1.2);
+        }
+
         .hero {
             background: linear-gradient(rgba(44, 0, 62, 0.7), rgba(44, 0, 62, 0.7)), url('https://source.unsplash.com/random/1920x1080/?beauty,pageant,miss');
             background-size: cover;
@@ -109,6 +200,26 @@
             font-size: clamp(1rem, 3.5vw, 1.2rem);
             max-width: 800px;
             margin: 0 auto 1.5rem;
+        }
+
+        .donation-notice {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1.5rem auto;
+            max-width: 500px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .donation-notice p {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .donation-notice .highlight {
+            color: var(--secondary);
+            font-weight: bold;
         }
 
         .hero-buttons {
@@ -418,10 +529,19 @@
                 text-align: center;
             }
 
-            nav ul {
-                margin-top: 1rem;
-                flex-direction: column;
-                gap: 0.5rem;
+            nav {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+            }
+
+            .mobile-nav {
+                display: flex;
             }
 
             .hero {
@@ -518,6 +638,9 @@
     <header>
         <div class="container header-content">
             <div class="logo">Miss <span>Golfe 1 2026</span></div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
             <nav>
                 <ul>
                     <li><a href="#about">À propos</a></li>
@@ -529,10 +652,28 @@
         </div>
     </header>
 
+    <!-- Navigation mobile -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-menu" id="closeMenu">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul>
+            <li><a href="#about" class="mobile-nav-link">À propos</a></li>
+            <li><a href="#vote" class="mobile-nav-link">Voter</a></li>
+            <li><a href="#donate" class="mobile-nav-link">Soutenir</a></li>
+            <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+        </ul>
+    </div>
+
     <section class="hero">
         <div class="container">
             <h1>Soutenez ma candidature à Miss Golfe 1 2026</h1>
             <p>Rejoignez-moi dans cette aventure magique ! En tant que représentante fière de notre région, j'ai besoin de votre soutien pour briller lors de ce concours prestigieux en décembre. Chaque vote et chaque don comptent pour réaliser ce rêve ensemble !</p>
+            
+            <div class="donation-notice">
+                <p><span class="highlight">Note importante :</span> Chaque don ou vote coûte <span class="highlight">200 FCFA</span>. Votre soutien financier m'aide à couvrir les frais de participation.</p>
+            </div>
+            
             <div class="hero-buttons">
                 <a href="https://payzyapp.com/vote/adjalleayawakevine355" class="btn">Voter maintenant</a>
                 <a href="https://payzyapp.com/vote/adjalleayawakevine355" class="btn btn-secondary">Faire un don</a>
@@ -616,6 +757,7 @@
             <div class="donation-form">
                 <h3>Faire un don</h3>
                 <p>Cliquez sur le bouton ci-dessous pour effectuer un don via notre plateforme sécurisée</p>
+                <p class="donation-price">Chaque don : <span class="highlight">200 FCFA</span></p>
                 <a href="https://payzyapp.com/vote/adjalleayawakevine355" target="_blank" class="btn">Faire un don maintenant</a>
             </div>
         </div>
@@ -634,16 +776,52 @@
         <div class="container">
             <p>Merci infiniment pour votre soutien précieux ! Ensemble, nous conquerrons le titre de Miss Golfe 1 2026.</p>
             <div class="social-links">
-                <a href="#">Facebook</a>
-                <a href="#">Instagram</a>
-                <a href="#">Twitter</a>
-                <a href="#">WhatsApp</a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
             </div>
             <p>© 2026 Campagne Miss Golfe1 2026 - Tous droits réservés</p>
         </div>
     </footer>
 
     <script>
+        // Navigation mobile - Version corrigée
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenu');
+            const mobileNav = document.getElementById('mobileNav');
+            const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            
+            // Ouvrir le menu mobile
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            // Fermer le menu mobile
+            closeMenuBtn.addEventListener('click', function() {
+                mobileNav.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Fermer le menu quand on clique sur un lien
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Fermer le menu quand on clique en dehors
+            mobileNav.addEventListener('click', function(e) {
+                if (e.target === mobileNav) {
+                    mobileNav.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+
         // Date cible pour le compte à rebours (15 décembre 2025)
         const countdownDate = new Date('Dec 15, 2025 23:59:59').getTime();
         
